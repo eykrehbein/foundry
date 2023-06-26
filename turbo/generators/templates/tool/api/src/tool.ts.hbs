@@ -1,0 +1,28 @@
+import { makeFunction } from "@usefoundry/utils";
+import { z } from "zod";
+
+export class {{pascalCase name}}Tool {
+    private apiKey: string = "";
+    private apiClient: AxiosInstance;
+    constructor({ apiKey }: { apiKey: string }) {
+        this.apiKey = apiKey;
+        this.apiClient = createApi({ apiKey });
+    }
+
+    public myFunction = makeFunction(
+        z
+            .object({
+                name: z.string(),
+            })
+            .describe(
+                "Does something important"
+            ),
+        async ({ name }) => {
+            const res = this.apiClient.post("/test", { name })
+
+            return res;
+        }
+    );
+}
+
+export default {{pascalCase name}}Tool;

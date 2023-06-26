@@ -1,0 +1,7 @@
+{
+    "extends": "@usefoundry/tsconfig/lib.json",
+    "compilerOptions": {
+        "outDir": "./dist"
+    },
+    "include": ["./src"]
+}

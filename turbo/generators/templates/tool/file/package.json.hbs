@@ -1,0 +1,23 @@
+{
+    "name": "@usefoundry/tools-file-{{dashCase name}}",
+    "version": "0.1.0",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "type": "module",
+    "author": "Foundry Community",
+    "license": "MIT",
+    "scripts": {
+        "build": "tsup src/index.ts --format cjs,esm --dts",
+        "lint": "tsc",
+        "test": "vitest"
+    },
+    "devDependencies": {
+        "tsup": "^7.0.0",
+        "typescript": "^5.1.3",
+        "vitest": "^0.32.2"
+    },
+    "dependencies": {
+        "@usefoundry/tsconfig": "*",
+        "@usefoundry/utils": "*"
+    }
+}

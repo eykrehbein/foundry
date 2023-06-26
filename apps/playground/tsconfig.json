@@ -16,7 +16,9 @@
         "noUnusedParameters": false,
         "preserveWatchOutput": true,
         "skipLibCheck": true,
-        "strict": true
+        "strict": true,
+        "outDir": "dist"
     },
+    "include": ["./src"],
     "exclude": ["node_modules", "./src/__tests__"]
 }

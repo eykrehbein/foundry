@@ -1,0 +1,3 @@
+{
+    "extends": "@usefoundry/tsconfig/lib.json"
+}
