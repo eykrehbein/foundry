@@ -7,23 +7,25 @@
     },
     "favicon": "/favicon.png",
     "colors": {
-        "primary": "#12A7D3",
-        "light": "#81D7F7",
-        "dark": "#004E7A"
-    },
-    "topbarLinks": [
-        {
-            "name": "Documentation",
-            "url": "https://mintlify.com/docs"
+        "primary": "#a855f7",
+        "light": "#d8b4fe",
+        "dark": "#9333ea",
+        "background": {
+            "dark": "#0F1116"
         }
-    ],
-    "topbarCtaButton": {
-        "name": "Dashboard",
-        "url": "https://dashboard.mintlify.com"
     },
-    "tabs": [
+    "topbarCtaButton": {
+        "type": "github",
+        "url": "https://github.com/loopholelabs/frpc-go"
+    },
+    "topAnchor": {
+        "name": "Overview",
+        "icon": "book-open"
+    },
+    "anchors": [
         {
             "name": "Tools",
+            "icon": "toolbox",
             "url": "tools"
         }
     ],
@@ -36,7 +38,7 @@
             "group": "Essentials",
             "pages": [
                 "essentials/tools-and-functions",
-                "essentials/tools-and-functions"
+                "essentials/create-custom-tools"
             ]
         },
         {
@@ -56,6 +58,5 @@
         "twitter": "https://twitter.com/mintlify",
         "github": "https://github.com/mintlify",
         "linkedin": "https://www.linkedin.com/company/mintsearch"
-    },
-    "backgroundImage": "/background.png"
+    }
 }
