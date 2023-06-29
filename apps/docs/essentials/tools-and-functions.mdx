@@ -1,0 +1,90 @@
+---
+title: "Tools and Functions"
+description: "What are tools and functions?"
+---
+
+## Tools
+
+A tool is a collection of functions that are bundled by a common purpose.
+In simple terms, it's just a `class` containing `public` functions.
+
+Every tool is it's own npm package. Find a list and documentation of all tools [here](/tools).
+To use a tool, install it using a package manager like npm or yarn.
+
+Tools are logically grouped into multiple categories:
+
+-   `API` Tools are used to interact with a third-party API
+-   `File` Tools are used to interact with local files of different formats
+-   `Utils` Tools are used to perform common tasks like string manipulation, calculations, random number generation, etc.
+
+## Functions
+
+A function is a function within the tool class. Functions are declared with a **schema** and a **handler**.
+
+The **schema** is a `zod` schema that describes the input of the function. When using it with Foundry, it's converted to a JSON schema which LLMs can understand.
+The **handler** is a function that is called when the function is executed. It receives the input as an object and returns the output.
+
+## Using just parts of a tool
+
+By default, all functions of a tool are exposed to LLMs. However, you can also expose just a single function or a subset of functions.
+
+## Example implementation of a Tool
+
+To better understand how tools work, let's look at an example implementation of a tool.
+
+This tool is a calculator that can be used to evaluate mathematical expressions.
+It exposes the `calculate` function which takes an expression as input and returns the result as a string.
+
+```typescript packages/tools/utils/calculator/src/tool.ts
+import { makeFunction } from "@usefoundry/utils";
+import { z } from "zod";
+import { evaluate } from "mathjs";
+
+export class CalculatorTool {
+    constructor() {}
+
+    public calculate = makeFunction(
+        z
+            .object({
+                expression: z
+                    .string()
+                    .describe("The mathematical expression to evaluate"),
+            })
+            .describe(
+                "Evaluates a mathematical expression and returns the result as string. Always use it do any math"
+            ),
+        async ({ expression }) => {
+            return evaluate(expression);
+        }
+    );
+}
+
+export default CalculatorTool;
+```
+
+```typescript packages/tools/utils/calculator/src/tool.ts
+import { makeFunction } from "@usefoundry/utils";
+import { z } from "zod";
+import { evaluate } from "mathjs";
+
+export class CalculatorTool {
+    constructor() {}
+
+    public calculate = makeFunction(
+        z
+            .object({
+                expression: z
+                    .string()
+                    .describe("The mathematical expression to evaluate"),
+            })
+            .describe(
+                "Evaluates a mathematical expression and returns the result as string. Always use it do any math"
+            ),
+        async ({ expression }) => {
+            return evaluate(expression);
+        }
+    );
+}
+
+export default CalculatorTool;
+```

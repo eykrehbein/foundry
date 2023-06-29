@@ -1,25 +1,51 @@
 import {
     validateTool,
     parseToolFunctions,
-    ParsedToolRef,
+    parseStandaloneFunction,
+    FunctionRef,
+    ParsedFunctionRef,
+    validateFunction,
 } from "@usefoundry/utils";
-import { DynamicTool } from "langchain/tools";
-
-type ClassRef = new (...args: any[]) => any;
 
 export class Foundry {
     private tools: object[] = [];
-    private flatFunctions: ParsedToolRef = [];
+    private flatFunctions: ParsedFunctionRef[] = [];
 
-    constructor({ tools }: { tools: object[] }) {
-        for (const tool of tools) {
-            if (!validateTool(tool)) {
-                throw new Error("Invalid tool");
+    constructor({ tools }: { tools: (object | FunctionRef)[] }) {
+        for (const entity of tools) {
+            // if it's a function
+            if (typeof entity === "function") {
+                if (!validateFunction(entity as FunctionRef)) {
+                    throw new Error("Invalid function");
+                }
+
+                const parsedFunction = parseStandaloneFunction(
+                    entity as FunctionRef
+                );
+                this.flatFunctions.push(parsedFunction);
+                // if it's an array
+            } else if (Array.isArray(entity)) {
+                console.log({
+                    entity,
+                });
+                for (const el of entity) {
+                    if (typeof el === "function") {
+                        if (!validateFunction(el as FunctionRef)) {
+                            throw new Error("Invalid function");
+                        }
+                    }
+                }
+
+                const parsedFunctions = parseToolFunctions(entity);
+                this.flatFunctions.push(...parsedFunctions);
+            } else {
+                if (!validateTool(entity)) {
+                    throw new Error("Invalid tool");
+                }
+
+                const parsedFunctions = parseToolFunctions(entity);
+                this.flatFunctions.push(...parsedFunctions);
             }
-
-            // flat push funcitons
-            const parsedFunctions = parseToolFunctions(tool);
-            this.flatFunctions.push(...parsedFunctions);
         }
     }
 

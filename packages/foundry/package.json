@@ -15,12 +15,8 @@
     "license": "MIT",
     "private": false,
     "dependencies": {
-        "@usefoundry/tools-api-weather-api": "0.1.0",
-        "@usefoundry/tools-file-csv": "0.1.0",
-        "@usefoundry/tools-utils-calculator": "0.1.0",
         "@usefoundry/tsconfig": "*",
-        "@usefoundry/utils": "*",
-        "langchain": "^0.0.96"
+        "@usefoundry/utils": "*"
     },
     "devDependencies": {
         "typescript": "^5.1.3"

@@ -15,6 +15,29 @@ declare class CsvTool {
     readCsvFileSync: (args: {
         path: string;
     }) => any;
+    pickFunctions(functionNames: Array<keyof CsvTool>): (((args: {
+        path: string;
+        data: {}[];
+        columns: string[];
+    }) => any) | ((args: {
+        path: string;
+        data: {}[];
+    }) => any) | ((args: {
+        path: string;
+    }) => any) | ((args: {
+        path: string;
+    }) => any) | ((functionNames: Array<keyof CsvTool>) => (((args: {
+        path: string;
+        data: {}[];
+        columns: string[];
+    }) => any) | ((args: {
+        path: string;
+        data: {}[];
+    }) => any) | ((args: {
+        path: string;
+    }) => any) | ((args: {
+        path: string;
+    }) => any) | any)[]))[];
 }
 
 export { CsvTool as default };

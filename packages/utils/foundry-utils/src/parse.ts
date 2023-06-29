@@ -19,23 +19,44 @@ export const validateTool = (toolInstance: any) => {
         }));
 
     for (const el of functions) {
-        const definition = el.func?.prototype?.getDefinition();
-        if (!definition) {
-            throw new Error(`Function ${el.name} does not have a definition.`);
-        }
-
-        if (!definition.schema) {
-            throw new Error(`Function ${el.name} does not have a schema.`);
-        }
-
-        if (!definition.description) {
-            throw new Error(`Function ${el.name} does not have a description.`);
-        }
+        validateFunction(el.func);
     }
     return true;
 };
 
-export const parseToolFunctions = (toolInstance: any) => {
+export const validateFunction = (func: FunctionRef) => {
+    const definition = func.prototype.getDefinition();
+
+    if (!definition) {
+        throw new Error(`Function ${func.name} does not have a definition.`);
+    }
+
+    if (!definition.schema) {
+        throw new Error(`Function ${func.name} does not have a schema.`);
+    }
+
+    if (!definition.description) {
+        throw new Error(`Function ${func.name} does not have a description.`);
+    }
+
+    return true;
+};
+
+export const parseStandaloneFunction = (
+    func: FunctionRef
+): ParsedFunctionRef => {
+    const definition = func.prototype.getDefinition();
+
+    return {
+        tool: null,
+        name: func.name,
+        fullName: func.name,
+        definition,
+        call: func,
+    };
+};
+
+export const parseToolFunctions = (toolInstance: any): ParsedFunctionRef[] => {
     const attributes = Object.getOwnPropertyNames(toolInstance);
     const functions = attributes
         .filter(
@@ -46,7 +67,9 @@ export const parseToolFunctions = (toolInstance: any) => {
         .map((name) => ({
             tool: toolInstance.constructor.name as string,
             name: name as string,
-            fullName: `${toolInstance.constructor.name}__${name}`,
+            fullName:
+                toolInstance[name].prototype?.fullName ||
+                `${toolInstance.constructor.name}__${name}`,
             definition: toolInstance[
                 name
             ]?.prototype?.getDefinition() as DefinitionProps,
@@ -56,4 +79,10 @@ export const parseToolFunctions = (toolInstance: any) => {
     return functions;
 };
 
-export type ParsedToolRef = ReturnType<typeof parseToolFunctions>;
+export type ParsedFunctionRef = {
+    tool: string | null;
+    name: string;
+    fullName: string;
+    definition: DefinitionProps;
+    call: FunctionRef;
+};

@@ -1,36 +1,12 @@
-import WeatherApiTool from '@usefoundry/tools-api-weather-api';
-import CsvTool from '@usefoundry/tools-file-csv';
-import CalculatorTool from '@usefoundry/tools-utils-calculator';
-import * as _usefoundry_utils from '@usefoundry/utils';
-
-declare const Tools: {
-    API: {
-        WeatherApi: typeof WeatherApiTool;
-    };
-    Files: {
-        Csv: typeof CsvTool;
-    };
-    Utils: {
-        Calculator: typeof CalculatorTool;
-    };
-};
+import { FunctionRef, ParsedFunctionRef } from '@usefoundry/utils';
 
 declare class Foundry {
     private tools;
     private flatFunctions;
     constructor({ tools }: {
-        tools: object[];
+        tools: (object | FunctionRef)[];
     });
-    getFunction(fullName: string): {
-        tool: string;
-        name: string;
-        fullName: string;
-        definition: {
-            description: string;
-            schema: object;
-        };
-        call: _usefoundry_utils.FunctionRef;
-    };
+    getFunction(fullName: string): ParsedFunctionRef;
     getPreparedFunctions({ target }: {
         target: "openai";
     }): {
@@ -44,4 +20,6 @@ declare class Foundry {
     }): Promise<any>;
 }
 
-export { Foundry, Tools };
+declare const pickFromTool: <T>(instance: T, functionNames: (keyof T)[]) => any[];
+
+export { Foundry, pickFromTool };

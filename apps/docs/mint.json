@@ -1,0 +1,61 @@
+{
+    "$schema": "https://mintlify.com/schema.json",
+    "name": "Foundry",
+    "logo": {
+        "dark": "/logo/dark.svg",
+        "light": "/logo/light.svg"
+    },
+    "favicon": "/favicon.png",
+    "colors": {
+        "primary": "#12A7D3",
+        "light": "#81D7F7",
+        "dark": "#004E7A"
+    },
+    "topbarLinks": [
+        {
+            "name": "Documentation",
+            "url": "https://mintlify.com/docs"
+        }
+    ],
+    "topbarCtaButton": {
+        "name": "Dashboard",
+        "url": "https://dashboard.mintlify.com"
+    },
+    "tabs": [
+        {
+            "name": "Tools",
+            "url": "tools"
+        }
+    ],
+    "navigation": [
+        {
+            "group": "Get Started",
+            "pages": ["introduction", "quickstart", "contributing"]
+        },
+        {
+            "group": "Essentials",
+            "pages": [
+                "essentials/tools-and-functions",
+                "essentials/tools-and-functions"
+            ]
+        },
+        {
+            "group": "API Tools",
+            "pages": ["tools/authentication"]
+        },
+        {
+            "group": "Utility Tools",
+            "pages": ["tools/authentication"]
+        },
+        {
+            "group": "File Tools",
+            "pages": ["tools/authentication"]
+        }
+    ],
+    "footerSocials": {
+        "twitter": "https://twitter.com/mintlify",
+        "github": "https://github.com/mintlify",
+        "linkedin": "https://www.linkedin.com/company/mintsearch"
+    },
+    "backgroundImage": "/background.png"
+}

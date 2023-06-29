@@ -1,4 +1,4 @@
-import { Foundry, Tools } from "@usefoundry/foundry";
+import { Foundry, pickFromTool } from "@usefoundry/foundry";
 import { ChatOpenAI } from "langchain/chat_models/openai";
 import {
     SystemChatMessage,
@@ -6,13 +6,19 @@ import {
     AIChatMessage,
 } from "langchain/schema";
 
+import WeatherApiTool from "@usefoundry/tools-api-weather-api";
+import CsvTool from "@usefoundry/tools-file-csv";
+
 const foundry = new Foundry({
     tools: [
-        new Tools.API.WeatherApi({
+        new WeatherApiTool({
             apiKey: process.env.WEATHER_API_KEY!,
         }),
-        new Tools.Files.Csv(),
-        new Tools.Utils.Calculator(),
+        pickFromTool(new CsvTool(), [
+            "writeCsvFileSync",
+            "getCsvFileColumnsSync",
+            "appendToCsvFileSync",
+        ]),
     ],
 });
 
@@ -24,8 +30,7 @@ const predictFunction = async (
         functions: foundry.getPreparedFunctions({ target: "openai" }),
         function_call: "auto",
     });
-
-    if (stepRes.additional_kwargs.function_call?.name) {
+    if (stepRes?.additional_kwargs?.function_call?.name) {
         return {
             name: stepRes.additional_kwargs.function_call.name,
             arguments: stepRes.additional_kwargs.function_call.arguments,

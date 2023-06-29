@@ -1,34 +1,43 @@
-// src/tools.ts
-import WeatherApiTool from "@usefoundry/tools-api-weather-api";
-import CsvTool from "@usefoundry/tools-file-csv";
-import CalculatorTool from "@usefoundry/tools-utils-calculator";
-var Tools = {
-  API: {
-    WeatherApi: WeatherApiTool
-  },
-  Files: {
-    Csv: CsvTool
-  },
-  Utils: {
-    Calculator: CalculatorTool
-  }
-};
-
 // src/foundry.ts
 import {
   validateTool,
-  parseToolFunctions
+  parseToolFunctions,
+  parseStandaloneFunction,
+  validateFunction
 } from "@usefoundry/utils";
 var Foundry = class {
   tools = [];
   flatFunctions = [];
   constructor({ tools }) {
-    for (const tool of tools) {
-      if (!validateTool(tool)) {
-        throw new Error("Invalid tool");
+    for (const entity of tools) {
+      if (typeof entity === "function") {
+        if (!validateFunction(entity)) {
+          throw new Error("Invalid function");
+        }
+        const parsedFunction = parseStandaloneFunction(
+          entity
+        );
+        this.flatFunctions.push(parsedFunction);
+      } else if (Array.isArray(entity)) {
+        console.log({
+          entity
+        });
+        for (const el of entity) {
+          if (typeof el === "function") {
+            if (!validateFunction(el)) {
+              throw new Error("Invalid function");
+            }
+          }
+        }
+        const parsedFunctions = parseToolFunctions(entity);
+        this.flatFunctions.push(...parsedFunctions);
+      } else {
+        if (!validateTool(entity)) {
+          throw new Error("Invalid tool");
+        }
+        const parsedFunctions = parseToolFunctions(entity);
+        this.flatFunctions.push(...parsedFunctions);
       }
-      const parsedFunctions = parseToolFunctions(tool);
-      this.flatFunctions.push(...parsedFunctions);
     }
   }
   getFunction(fullName) {
@@ -68,7 +77,18 @@ var Foundry = class {
     return await func.call(parsedArgs);
   }
 };
+
+// src/utils.ts
+var pickFromTool = (instance, functionNames) => {
+  const functions = functionNames.map((methodName) => {
+    const func = instance[methodName];
+    func.prototype.fullName = // @ts-ignore
+    instance.constructor.name + "__" + methodName;
+    return func;
+  });
+  return functions;
+};
 export {
   Foundry,
-  Tools
+  pickFromTool
 };

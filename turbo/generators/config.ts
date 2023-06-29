@@ -5,15 +5,6 @@ const installPackages: PlopTypes.CustomActionFunction = async (props: any) => {
     const execa = await import("execa");
     await execa.execa("yarn");
 
-    await execa.execa("yarn", [
-        "workspace",
-        "@usefoundry/foundry",
-        "add",
-        `@usefoundry/tools-${props.type}-${props.name
-            .toLowerCase()
-            .replace(/[\s_]+/g, "-")}@0.1.0`,
-    ]);
-
     return 'Installed packages with "yarn"';
 };
 

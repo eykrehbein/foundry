@@ -89,6 +89,17 @@ export class CsvTool {
             return data;
         }
     );
+
+    public pickFunctions(functionNames: Array<keyof CsvTool>) {
+        return functionNames.map((methodName) => {
+            const func = this[methodName];
+            func.prototype.fullName =
+                Object.getPrototypeOf(this).constructor.name +
+                "__" +
+                methodName;
+            return func;
+        });
+    }
 }
 
 export default CsvTool;

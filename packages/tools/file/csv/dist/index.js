@@ -3749,6 +3749,13 @@ var CsvTool = class {
       return data;
     }
   );
+  pickFunctions(functionNames) {
+    return functionNames.map((methodName) => {
+      const func = this[methodName];
+      func.prototype.fullName = Object.getPrototypeOf(this).constructor.name + "__" + methodName;
+      return func;
+    });
+  }
 };
 var tool_default = CsvTool;
 
