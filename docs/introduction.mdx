@@ -7,9 +7,11 @@ description: "What is Foundry and how can it help you build LLM apps?"
 
 Foundry is a framework-agnostic collection of tools that you can use to build dynamic LLM applications.
 
-A tool contains a set of functions that can be used to perform a specific task within a certain domain. For example, the `Utils.Calculator` tool contains a `calculate` function that can be used to perform calculations by passing in a math string.
+A tool contains a set of functions that can be used to perform a specific task within a certain domain. For example, the `Calculator` tool contains a `calculate` function that can be used to perform calculations by passing in a math string.
 
-Under the hood, it's just a community-made collection of functions that are defined in a certain way so that they can easily be used by any LLM app.
+This tool can easily be passed to LLMs without writing custom JSON Schema. You can also just use certain functions from tools, not all.
+
+Under the hood, it's a community-made collection of functions that are defined in a certain way so that they can easily be used by any LLM app.
 
 [_We'd love to welcome you as a contributor to Foundry!_](./contributing)
 
@@ -45,22 +47,21 @@ Note how the `getPreparedFunctions` dynamically generates the function definitio
 After the LLM has predicted the function to run, we can use `runSelectedFunction` to run the function with the computed arguments to get the desired result.
 
 ```typescript openai.ts
-import { Foundry, Tools, pickFromTool } from "@usefoundry/foundry";
+import { Foundry } from "@usefoundry/foundry";
 import { Configuration, OpenAIApi } from "openai";
 
-// Create a foundry instance with the tools and functions the LLM should use
+import WeatherApiTool from "@usefoundry/tools-api-weather-api";
+import CsvTool from "@usefoundry/tools-file-csv";
+import CalculatorTool from "@usefoundry/tools-utils-calculator";
+
+// Create a foundry instance with the tools we want to use
 const foundry = new Foundry({
     tools: [
-        new Tools.API.WeatherApi({
+        new WeatherApiTool({
             apiKey: process.env.WEATHER_API_KEY!,
         }),
-        pickFromTool(new Tools.Files.Csv(), [
-            "writeCsvFileSync",
-            "getCsvFileColumnsSync",
-            "appendToCsvFileSync",
-        ]),
-        new Tools.Utils.Calculator(),
-        new Tools.Utils.Random(),
+        new CsvTool(),
+        new CalculatorTool(),
     ],
 });
 
@@ -104,14 +105,12 @@ const runPrompt = async ({ userPrompt }: { userPrompt: string }) => {
         throw new Error("No function found in response");
     }
 
-    const functionResult = await foundry.runSelectedFunction(
-        targetFunctionProps
-    );
+    const functionResult = foundry.runSelectedFunction(targetFunctionProps);
 
     return functionResult;
 };
 
-await runPrompt({ userPrompt: "What is the weather in Berlin?" });
+await runPrompt({ userPrompt: "What is the weather in Berlin today?" });
 await runPrompt({ userPrompt: "What is 2 + 2?" });
 await runPrompt({
     userPrompt:
@@ -125,9 +124,9 @@ await runPrompt({ userPrompt: "Get a random number between 30 and 60" });
 You can also use the functions from Foundry standalone, without LLMs or the `Foundry` class.
 
 ```typescript standalone.ts
-import { Tools } from "@usefoundry/foundry";
+import CsvTool from "@usefoundry/tools-file-csv";
 
-const csv = new Tools.Files.Csv();
+const csv = new CsvTool();
 
 const presidents = [
     {

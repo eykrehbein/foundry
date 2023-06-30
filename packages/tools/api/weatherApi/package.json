@@ -8,6 +8,8 @@
     "type": "module",
     "scripts": {
         "build": "tsup src/index.ts --format cjs,esm --dts",
+        "postbuild": "yarn generate-docs --type api",
+        "generate-docs": "foundry generate-docs",
         "lint": "tsc",
         "test": "vitest"
     },

@@ -1,5 +1,6 @@
 {
     "name": "@usefoundry/tools-file-csv",
+    "description": "Tool for working with CSV files in Foundry",
     "version": "0.1.0",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -8,6 +9,8 @@
     "license": "MIT",
     "scripts": {
         "build": "tsup src/index.ts --format cjs,esm --dts",
+        "postbuild": "yarn generate-docs",
+        "generate-docs": "foundry generate-docs --type file",
         "lint": "tsc",
         "test": "vitest"
     },

@@ -7,16 +7,16 @@
     },
     "favicon": "/favicon.png",
     "colors": {
-        "primary": "#a855f7",
-        "light": "#d8b4fe",
-        "dark": "#9333ea",
+        "primary": "#4FDD80",
+        "light": "#6CEE99",
+        "dark": "#33BA51",
         "background": {
-            "dark": "#0F1116"
+            "dark": "#111312"
         }
     },
     "topbarCtaButton": {
         "type": "github",
-        "url": "https://github.com/loopholelabs/frpc-go"
+        "url": "https://github.com/eykrehbein/strest"
     },
     "topAnchor": {
         "name": "Overview",
@@ -43,20 +43,23 @@
         },
         {
             "group": "API Tools",
-            "pages": ["tools/authentication"]
+            "type": "api",
+            "pages": ["tools/api/WeatherApi"]
         },
         {
             "group": "Utility Tools",
-            "pages": ["tools/authentication"]
+            "type": "utils",
+            "pages": ["tools/utils/Calculator"]
         },
         {
             "group": "File Tools",
-            "pages": ["tools/authentication"]
+            "type": "file",
+            "pages": ["tools/file/Csv"]
         }
     ],
     "footerSocials": {
         "twitter": "https://twitter.com/mintlify",
-        "github": "https://github.com/mintlify",
-        "linkedin": "https://www.linkedin.com/company/mintsearch"
+        "github": "https://github.com/eykrehbein/foundry",
+        "discord": "https://discord"
     }
 }
