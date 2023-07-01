@@ -1,8 +1,5 @@
 {
     "name": "@usefoundry/utils",
-    "bin": {
-        "foundry": "./dist/cli.js"
-    },
     "version": "0.1.0",
     "description": "Utilities to be used with Foundry",
     "main": "dist/index.js",
