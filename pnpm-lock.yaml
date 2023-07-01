@@ -184,6 +184,7 @@ importers:
 
   packages/utils/foundry-utils:
     specifiers:
+      '@types/node': ^20.3.3
       '@usefoundry/tsconfig': '*'
       axios: ^1.4.0
       commander: ^11.0.0
@@ -200,6 +201,7 @@ importers:
       zod: 3.21.4
       zod-to-json-schema: 3.21.3_zod@3.21.4
     devDependencies:
+      '@types/node': 20.3.3
       tsup: 7.1.0_typescript@5.1.6
       typescript: 5.1.6
 
