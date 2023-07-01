@@ -26,11 +26,6 @@ program
 
         const functions = parseToolFunctions(instance);
 
-        console.log({
-            type,
-            functions,
-        });
-
         const nameWithoutSuffix = name.endsWith("Tool")
             ? name.slice(0, -4)
             : name;
