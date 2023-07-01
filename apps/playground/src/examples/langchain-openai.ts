@@ -1,13 +1,9 @@
-import { Foundry, pickFromTool } from "@usefoundry/foundry";
-import { ChatOpenAI } from "langchain/chat_models/openai";
-import {
-    SystemChatMessage,
-    HumanChatMessage,
-    AIChatMessage,
-} from "langchain/schema";
+import { Foundry, pickFromTool } from '@usefoundry/foundry'
+import { ChatOpenAI } from 'langchain/chat_models/openai'
+import { SystemChatMessage, HumanChatMessage, AIChatMessage } from 'langchain/schema'
 
-import WeatherApiTool from "@usefoundry/tools-api-weather-api";
-import CsvTool from "@usefoundry/tools-file-csv";
+import WeatherApiTool from '@usefoundry/tools-api-weather-api'
+import CsvTool from '@usefoundry/tools-file-csv'
 
 const foundry = new Foundry({
     tools: [
@@ -15,40 +11,36 @@ const foundry = new Foundry({
             apiKey: process.env.WEATHER_API_KEY!,
         }),
         pickFromTool(new CsvTool(), [
-            "writeCsvFileSync",
-            "getCsvFileColumnsSync",
-            "appendToCsvFileSync",
+            'writeCsvFileSync',
+            'getCsvFileColumnsSync',
+            'appendToCsvFileSync',
         ]),
     ],
-});
+})
 
 const predictFunction = async (
     messages: (SystemChatMessage | HumanChatMessage | AIChatMessage)[],
     llm: ChatOpenAI
 ) => {
     const stepRes = await llm.predictMessages(messages, {
-        functions: foundry.getPreparedFunctions({ target: "openai" }),
-        function_call: "auto",
-    });
+        functions: foundry.getPreparedFunctions({ target: 'openai' }),
+        function_call: 'auto',
+    })
     if (stepRes?.additional_kwargs?.function_call?.name) {
         return {
             name: stepRes.additional_kwargs.function_call.name,
             arguments: stepRes.additional_kwargs.function_call.arguments,
-        };
+        }
     }
 
-    return null;
-};
+    return null
+}
 
-export const runLangchainPromptChain = async ({
-    prompt,
-}: {
-    prompt: string;
-}) => {
+export const runLangchainPromptChain = async ({ prompt }: { prompt: string }) => {
     const model = new ChatOpenAI({
-        modelName: "gpt-4-0613",
+        modelName: 'gpt-4-0613',
         temperature: 0,
-    });
+    })
 
     const messages = [
         new SystemChatMessage(`
@@ -56,22 +48,22 @@ export const runLangchainPromptChain = async ({
         - Current date: ${new Date().toDateString()}
     `),
         new HumanChatMessage(prompt),
-    ];
+    ]
 
-    let run = true;
+    let run = true
 
-    const executedFunctions = [];
+    const executedFunctions = []
 
     while (run) {
-        const stepRes = await predictFunction(messages, model);
-        console.log({ stepRes });
+        const stepRes = await predictFunction(messages, model)
+        console.log({ stepRes })
         if (!stepRes) {
-            run = false;
-            break;
+            run = false
+            break
         }
 
-        const functionCallResult = await foundry.runSelectedFunction(stepRes);
-        executedFunctions.push(stepRes);
+        const functionCallResult = await foundry.runSelectedFunction(stepRes)
+        executedFunctions.push(stepRes)
 
         messages.push(
             new AIChatMessage(`
@@ -79,21 +71,21 @@ export const runLangchainPromptChain = async ({
             - name: ${stepRes.name}
             - arguments: ${stepRes.arguments?.toString()}
         `)
-        );
+        )
 
         messages.push(
             new SystemChatMessage(`
             Function result:
             ${JSON.stringify(functionCallResult)}
         `)
-        );
+        )
 
         messages.push(
             new HumanChatMessage(
                 `If you have not solved every sub-task of the prompt yet, please continue. Otherwise, don't call a function.`
             )
-        );
+        )
     }
 
-    return { executedFunctions };
-};
+    return { executedFunctions }
+}

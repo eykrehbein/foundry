@@ -1,8 +1,6 @@
 declare class CalculatorTool {
-    constructor();
-    calculate: (args: {
-        expression: string;
-    }) => any;
+    constructor()
+    calculate: (args: { expression: string }) => any
 }
 
-export { CalculatorTool as default };
+export { CalculatorTool as default }

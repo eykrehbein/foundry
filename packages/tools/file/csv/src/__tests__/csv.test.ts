@@ -1,115 +1,115 @@
-import { validateTool } from "@usefoundry/utils";
-import Tool from "../index.js";
-import fs from "fs";
-import { stringify as csvStringify } from "csv-stringify/sync";
-import { parse as csvParse } from "csv-parse/sync";
+import { validateTool } from '@usefoundry/utils'
+import Tool from '../index.js'
+import fs from 'fs'
+import { stringify as csvStringify } from 'csv-stringify/sync'
+import { parse as csvParse } from 'csv-parse/sync'
 
-import { expect, test } from "vitest";
+import { expect, test } from 'vitest'
 
-test("Tool defined correctly", async () => {
-    const instance = new Tool();
+test('Tool defined correctly', async () => {
+    const instance = new Tool()
 
-    expect(validateTool(instance)).toBe(true);
-});
+    expect(validateTool(instance)).toBe(true)
+})
 
-test("writeCsvFile", async () => {
-    const instance = new Tool();
+test('writeCsvFile', async () => {
+    const instance = new Tool()
 
-    const path = "/tmp/test.csv";
+    const path = '/tmp/test.csv'
 
     instance.writeCsvFileSync({
         path,
         data: [
-            { name: "John", age: 21 },
-            { name: "Jane", age: 22, city: "New York" },
+            { name: 'John', age: 21 },
+            { name: 'Jane', age: 22, city: 'New York' },
         ],
-        columns: ["name", "age"],
-    });
+        columns: ['name', 'age'],
+    })
 
-    const rawFile = fs.readFileSync(path, { encoding: "utf-8" });
+    const rawFile = fs.readFileSync(path, { encoding: 'utf-8' })
     const parsedFile = csvParse(rawFile, {
         columns: true,
-    });
+    })
 
     expect(parsedFile).toEqual([
-        { name: "John", age: "21" },
-        { name: "Jane", age: "22" },
-    ]);
-});
+        { name: 'John', age: '21' },
+        { name: 'Jane', age: '22' },
+    ])
+})
 
-test("appendToCsvFile", async () => {
-    const instance = new Tool();
+test('appendToCsvFile', async () => {
+    const instance = new Tool()
 
-    const path = "/tmp/test.csv";
+    const path = '/tmp/test.csv'
 
     instance.writeCsvFileSync({
         path,
         data: [
-            { name: "John", age: 21 },
-            { name: "Jane", age: 22 },
+            { name: 'John', age: 21 },
+            { name: 'Jane', age: 22 },
         ],
-        columns: ["name", "age"],
-    });
+        columns: ['name', 'age'],
+    })
 
     instance.appendToCsvFileSync({
         path,
         data: [
-            { name: "Bob", age: 25 },
-            { name: "Alice", age: 26 },
+            { name: 'Bob', age: 25 },
+            { name: 'Alice', age: 26 },
         ],
-    });
+    })
 
-    const rawFile = fs.readFileSync(path, { encoding: "utf-8" });
+    const rawFile = fs.readFileSync(path, { encoding: 'utf-8' })
     const parsedFile = csvParse(rawFile, {
         columns: true,
-    });
+    })
 
     expect(parsedFile).toEqual([
-        { name: "John", age: "21" },
-        { name: "Jane", age: "22" },
-        { name: "Bob", age: "25" },
-        { name: "Alice", age: "26" },
-    ]);
-});
+        { name: 'John', age: '21' },
+        { name: 'Jane', age: '22' },
+        { name: 'Bob', age: '25' },
+        { name: 'Alice', age: '26' },
+    ])
+})
 
-test("readCsvFile", async () => {
-    const instance = new Tool();
+test('readCsvFile', async () => {
+    const instance = new Tool()
 
-    const path = "/tmp/test.csv";
+    const path = '/tmp/test.csv'
 
     instance.writeCsvFileSync({
         path,
         data: [
-            { name: "John", age: 21 },
-            { name: "Jane", age: 22 },
+            { name: 'John', age: 21 },
+            { name: 'Jane', age: 22 },
         ],
-        columns: ["name", "age"],
-    });
+        columns: ['name', 'age'],
+    })
 
     const parsedFile = instance.readCsvFileSync({
         path,
-    });
+    })
 
     expect(parsedFile).toEqual([
-        { name: "John", age: "21" },
-        { name: "Jane", age: "22" },
-    ]);
-});
+        { name: 'John', age: '21' },
+        { name: 'Jane', age: '22' },
+    ])
+})
 
-test("get columns", async () => {
-    const instance = new Tool();
+test('get columns', async () => {
+    const instance = new Tool()
 
-    const path = "/tmp/test.csv";
+    const path = '/tmp/test.csv'
 
     instance.writeCsvFileSync({
         path,
-        data: [{ name: "Jane", age: 22 }],
-        columns: ["name", "age"],
-    });
+        data: [{ name: 'Jane', age: 22 }],
+        columns: ['name', 'age'],
+    })
 
     const columns = instance.getCsvFileColumnsSync({
         path,
-    });
+    })
 
-    expect(columns).toEqual(["name", "age"]);
-});
+    expect(columns).toEqual(['name', 'age'])
+})

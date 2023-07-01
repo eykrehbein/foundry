@@ -7,7 +7,7 @@
         "dev": "turbo run dev",
         "lint": "turbo run lint",
         "release": "turbo run release",
-        "format": "prettier --write \"**/*.{ts,tsx,md}\""
+        "format": "prettier --write \"**/*.{ts,tsx,md,mdx}\""
     },
     "devDependencies": {
         "@turbo/gen": "^1.9.7",

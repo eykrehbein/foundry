@@ -1,2 +1,2 @@
-import Tool from "./tool.js";
-export default Tool;
+import Tool from './tool.js'
+export default Tool
