@@ -15,5 +15,5 @@ jobs:
                   cache: "yarn"
 
             - run: yarn install --frozen-lockfile
-            - run: yarn turbo lint
             - run: yarn turbo build
+            - run: yarn turbo lint
