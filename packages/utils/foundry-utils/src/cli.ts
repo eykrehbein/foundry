@@ -107,11 +107,17 @@ pnpm add  @usefoundry/tools-${type}-${dashCaseName}
             fs.readFileSync(path.join(root, "docs", "mint.json"), "utf8")
         );
 
-        const toolConfigs = mintConfig.navigation.filter(
-            (item: any) => !!item.type
-        );
-
-        const toolConfig = toolConfigs.find((item: any) => item.type === type);
+        const toolConfig = mintConfig.navigation.find((item: any) => {
+            if (type === "utils") {
+                return item.group === "Utility Tools";
+            }
+            if (type === "api") {
+                return item.group === "API Tools";
+            }
+            if (type === "file") {
+                return item.group === "File Tools";
+            }
+        });
 
         if (!toolConfig) {
             throw new Error(`Could not find tool config for type ${type}`);
@@ -120,9 +126,16 @@ pnpm add  @usefoundry/tools-${type}-${dashCaseName}
         if (!toolConfig.pages.includes(`tools/${type}/${nameWithoutSuffix}`)) {
             toolConfig.pages.push(`tools/${type}/${nameWithoutSuffix}`);
             mintConfig.navigation = mintConfig.navigation.map((item: any) => {
-                if (item.type === type) {
+                if (type === "utils" && item.group === "Utility Tools") {
                     return toolConfig;
                 }
+                if (type === "api" && item.group === "API Tools") {
+                    return toolConfig;
+                }
+                if (type === "file" && item.group === "File Tools") {
+                    return toolConfig;
+                }
+
                 return item;
             });
         }
