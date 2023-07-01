@@ -13,7 +13,9 @@
 <p align="center">
   <a href="https://docs.withfoundry.org">Documentation</a> •
   <a href="https://docs.withfoundry.org/quickstart">Quickstart</a> • 
-  <a href="https://docs.withfoundry.org/contribute">Contribute</a> 
+  <a href="https://docs.withfoundry.org/contribute">Contribute</a> •
+  <a href="https://discord.gg/xsZfmakRhw">Discord</a>
+
 </p>
 
 <hr/>
