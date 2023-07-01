@@ -8,9 +8,9 @@
     "license": "MIT",
     "scripts": {
         "build": "tsup src/index.ts --format cjs,esm --dts",
-        "postbuild": "yarn generate-docs",
+        "postbuild": "pnpm generate-docs",
         "generate-docs": "node ./node_modules/@usefoundry/utils/dist/cli.js generate-docs --type utils",
-        "release": "yarn build && changeset publish",
+        "release": "pnpm build && changeset publish",
         "lint": "tsc",
         "test": "vitest"
     },
@@ -21,6 +21,7 @@
         "vitest": "^0.32.2"
     },
     "dependencies": {
+        "zod": "^3.21.4",
         "@usefoundry/tsconfig": "*",
         "@usefoundry/utils": "*",
         "math-expression-evaluator": "^2.0.3",

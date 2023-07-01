@@ -63,7 +63,17 @@ pnpm add  @usefoundry/tools-${type}-${dashCaseName}
                 let markdown = ''
                 for (const key in schema.properties) {
                     const property = schema.properties[key]
-                    markdown += `${'  '.repeat(level)}- \`${key}\` (${property.type})${
+                    let propType = property.type
+                    if (property.enum) {
+                        if (property.type === 'string') {
+                            propType = property.enum.map((item: any) => `'${item}'`).join(' | ')
+                        }
+                        if (property.type === 'number') {
+                            propType = property.enum.join(' | ')
+                        }
+                    }
+
+                    markdown += `${'  '.repeat(level)}- \`${key}\` (${propType})${
                         property.description ? `: ${property.description}` : ''
                     }\n`
                     if (property.properties) {
@@ -74,6 +84,7 @@ pnpm add  @usefoundry/tools-${type}-${dashCaseName}
             }
 
             docs += `Properties:\n`
+
             docs += schemaToMarkdown(func.definition.schema)
         }
 

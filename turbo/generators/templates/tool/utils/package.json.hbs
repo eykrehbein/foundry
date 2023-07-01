@@ -10,19 +10,20 @@
     "homepage": "https://docs.usefoundry.io/tools/utils/{{pascalCase name}}",
     "scripts": {
         "build": "tsup src/index.ts --format cjs,esm --dts",
-        "postbuild": "yarn generate-docs",
+        "postbuild": "pnpm generate-docs",
         "generate-docs": "node ./node_modules/@usefoundry/utils/dist/cli.js generate-docs --type utils",
+        "release": "pnpm build && changeset publish",
         "lint": "tsc",
         "test": "vitest"
     },
     "devDependencies": {
         "@changesets/cli": "^2.26.2",
-        "release": "yarn build && changeset publish",
         "tsup": "^7.0.0",
         "typescript": "^5.1.3",
         "vitest": "^0.32.2"
     },
     "dependencies": {
+        "zod": "^3.21.4",
         "@usefoundry/tsconfig": "*",
         "@usefoundry/utils": "*"
     }

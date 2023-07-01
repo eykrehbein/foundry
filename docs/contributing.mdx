@@ -22,11 +22,11 @@ We value all contributions equally, regardless of their size or scope. Whether y
 ## Contribution Development Workflow
 
 1. Fork the Foundry repository on GitHub.
-2. Install the project dependencies by running `yarn` in the root directory.
+2. Install the project dependencies by running `pnpm install` in the root directory.
 3. Create a new branch for your contribution.
 4. Make your desired changes or additions.
-5. Test them by adding, updating or running existing unit tests. Run `yarn test` to execute the tests
-6. Build using `yarn build` and test your changes locally. The documentation for the tool is automatically generated post-build.
+5. Test them by adding, updating or running existing unit tests. Run `pnpm test` to execute the tests
+6. Build using `pnpm build` and test your changes locally. The documentation for the tool is automatically generated post-build.
 7. Create a changeset
 
 A changeset is a file that describes the changes you have made to the project. It is used to generate a changelog and to determine the next version number for each package.
@@ -34,7 +34,7 @@ A changeset is a file that describes the changes you have made to the project. I
 In the root directory, run:
 
 ```bash
-yarn changeset
+pnpm run changeset
 ```
 
 When prompted, select the impacted packages, select the type of change (patch, minor, major), and enter a summary of your changes.
@@ -46,3 +46,13 @@ This will create a new changeset file in the `.changeset` directory.
 11. Once your contribution is accepted, it will be merged into the main codebase! 🎉
 
 If you have any questions or need assistance with your contribution, please join our [Discord community](https://discord.gg/xsZfmakRhw) and ask in the `#contribution-help` channel.
+
+## Creating a new tool
+
+We've set up a generator to help you create a new tool. To use it, the following from the root directory:
+
+```bash
+pnpm turbo gen tool
+```
+
+You

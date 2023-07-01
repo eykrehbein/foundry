@@ -1,11 +1,11 @@
 import { PlopTypes } from '@turbo/gen'
 
 const installPackages: PlopTypes.CustomActionFunction = async (props: any) => {
-    // run yarn without deps
+    // run pnpm without deps
     const execa = await import('execa')
-    await execa.execa('yarn')
+    await execa.execa('pnpm', ['install'])
 
-    return 'Installed packages with "yarn"'
+    return 'Installed packages with "pnpm"'
 }
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {

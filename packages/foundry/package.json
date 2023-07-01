@@ -20,6 +20,7 @@
         "@usefoundry/utils": "*"
     },
     "devDependencies": {
+        "tsup": "^7.0.0",
         "typescript": "^5.1.3"
     },
     "publishConfig": {
