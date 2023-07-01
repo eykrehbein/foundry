@@ -2,8 +2,8 @@
     "$schema": "https://mintlify.com/schema.json",
     "name": "Foundry",
     "logo": {
-        "dark": "/logo/dark.svg",
-        "light": "/logo/light.svg"
+        "dark": "/logo/logo_dark_aligned.svg",
+        "light": "/logo/logo_light_aligned.svg"
     },
     "favicon": "/favicon.png",
     "colors": {
@@ -32,36 +32,23 @@
     "navigation": [
         {
             "group": "Get Started",
-            "pages": [
-                "introduction",
-                "quickstart",
-                "contributing"
-            ]
+            "pages": ["introduction", "quickstart", "contributing"]
         },
         {
             "group": "Essentials",
-            "pages": [
-                "essentials/tools-and-functions",
-                "essentials/create-custom-tools"
-            ]
+            "pages": ["essentials/tools-and-functions", "essentials/create-custom-tools"]
         },
         {
             "group": "API Tools",
-            "pages": [
-                "tools/api/WeatherApi"
-            ]
+            "pages": ["tools/api/WeatherApi"]
         },
         {
             "group": "Utility Tools",
-            "pages": [
-                "tools/utils/Calculator"
-            ]
+            "pages": ["tools/utils/Calculator"]
         },
         {
             "group": "File Tools",
-            "pages": [
-                "tools/file/Csv"
-            ]
+            "pages": ["tools/file/Csv"]
         }
     ],
     "footerSocials": {
