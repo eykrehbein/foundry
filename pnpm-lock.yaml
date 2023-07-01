@@ -163,6 +163,7 @@ importers:
   packages/tools/utils/random:
     specifiers:
       '@changesets/cli': ^2.26.2
+      '@types/node': ^20.3.3
       '@usefoundry/tsconfig': '*'
       '@usefoundry/utils': '*'
       tsup: ^7.0.0
@@ -175,6 +176,7 @@ importers:
       zod: 3.21.4
     devDependencies:
       '@changesets/cli': 2.26.2
+      '@types/node': 20.3.3
       tsup: 7.1.0_typescript@5.1.6
       typescript: 5.1.6
       vitest: 0.32.2
