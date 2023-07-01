@@ -3699,13 +3699,9 @@ var CsvTool = class {
       columns: z.array(z.string()).describe("Defines the columns to write, in order")
     }).describe("Writes data to a csv file"),
     async ({ path, columns, data }) => {
-      fs.writeFileSync(
-        path,
-        csvStringify(data, { columns, header: true }),
-        {
-          encoding: "utf-8"
-        }
-      );
+      fs.writeFileSync(path, csvStringify(data, { columns, header: true }), {
+        encoding: "utf-8"
+      });
     }
   );
   appendToCsvFileSync = makeFunction(

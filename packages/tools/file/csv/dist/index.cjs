@@ -3735,13 +3735,9 @@ var CsvTool = class {
       columns: z.array(z.string()).describe("Defines the columns to write, in order")
     }).describe("Writes data to a csv file"),
     async ({ path, columns, data }) => {
-      import_fs.default.writeFileSync(
-        path,
-        (0, import_sync.stringify)(data, { columns, header: true }),
-        {
-          encoding: "utf-8"
-        }
-      );
+      import_fs.default.writeFileSync(path, (0, import_sync.stringify)(data, { columns, header: true }), {
+        encoding: "utf-8"
+      });
     }
   );
   appendToCsvFileSync = (0, import_utils.makeFunction)(
