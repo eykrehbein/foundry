@@ -3,3 +3,46 @@ title: 'Contributing'
 description: "Let's build the future of LLM applications – together!"
 icon: 'heart'
 ---
+
+## Introduction
+
+We believe that the success of Foundry lies in the collaboration and contributions from a vibrant community of developers. Whether you are a seasoned developer or just starting out, we welcome your contributions to enhance the Foundry ecosystem. There are multiple ways you can contribute to Foundry:
+
+-   **Submit Custom Tools**:
+    Foundry is a framework-agnostic collection of tools, and you can contribute by creating and submitting your own custom tools. A tool is a set of functions designed to perform specific tasks within a certain domain. By creating and sharing your custom tools, you can help expand the functionality and usefulness of Foundry for everyone.
+
+-   **Find and Solve Bugs**:
+    As with any software project, bugs are bound to occur. If you come across any bugs or issues while using Foundry, we encourage you to report them. By providing detailed bug reports and even proposing fixes or solutions, you can help improve the stability and reliability of Foundry for all users.
+
+-   **Contribute to the General Ecosystem**:
+    Beyond custom tools and bug fixes, you can contribute to the general ecosystem of Foundry. This can involve improving documentation, suggesting new features or enhancements, sharing best practices and tutorials, or engaging in discussions on community forums. Your contributions to the general ecosystem can greatly benefit the entire community and make Foundry a better tool for everyone.
+
+We value all contributions equally, regardless of their size or scope. Whether you submit a new custom tool, fix a critical bug, or provide valuable feedback, your contribution is highly appreciated. Together, we can build a thriving community of developers passionate about building LLM apps and leveraging the power of Foundry.
+
+## Contribution Development Workflow
+
+1. Fork the Foundry repository on GitHub.
+2. Install the project dependencies by running `yarn` in the root directory.
+3. Create a new branch for your contribution.
+4. Make your desired changes or additions.
+5. Test them by adding, updating or running existing unit tests. Run `yarn test` to execute the tests
+6. Build using `yarn build` and test your changes locally. The documentation for the tool is automatically generated post-build.
+7. Create a changeset
+
+A changeset is a file that describes the changes you have made to the project. It is used to generate a changelog and to determine the next version number for each package.
+
+In the root directory, run:
+
+```bash
+yarn changeset
+```
+
+When prompted, select the impacted packages, select the type of change (patch, minor, major), and enter a summary of your changes.
+This will create a new changeset file in the `.changeset` directory.
+
+8. Commit and push your changes
+9. Submit a pull request to the `main` branch in the Foundry repository.
+10. Go through the review process together with Foundry maintainers.
+11. Once your contribution is accepted, it will be merged into the main codebase! 🎉
+
+If you have any questions or need assistance with your contribution, please join our [Discord community](https://discord.gg/xsZfmakRhw) and ask in the `#contribution-help` channel.
