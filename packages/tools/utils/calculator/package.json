@@ -25,5 +25,8 @@
         "@usefoundry/utils": "*",
         "math-expression-evaluator": "^2.0.3",
         "mathjs": "^11.8.2"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

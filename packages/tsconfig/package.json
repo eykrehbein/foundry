@@ -1,5 +1,8 @@
 {
     "name": "@usefoundry/tsconfig",
     "version": "0.1.0",
-    "type": "module"
+    "type": "module",
+    "publishConfig": {
+        "access": "public"
+    }
 }
