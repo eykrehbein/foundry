@@ -11,9 +11,9 @@
 <h4 align="center">A collection of tools and functions that can be used in conjunction with LLMs.</h4>
 
 <p align="center">
-  <a href="https://docs.withfoundry.org">Documentation</a> •
-  <a href="https://docs.withfoundry.org/quickstart">Quickstart</a> • 
-  <a href="https://docs.withfoundry.org/contribute">Contribute</a> •
+  <a href="https://docs.usefoundry.io">Documentation</a> •
+  <a href="https://docs.usefoundry.io/quickstart">Quickstart</a> • 
+  <a href="https://docs.usefoundry.io/contributing">Contribute</a> •
   <a href="https://discord.gg/xsZfmakRhw">Discord</a>
 
 </p>
