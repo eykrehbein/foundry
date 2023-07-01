@@ -5,7 +5,8 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "type": "module",
-    "repository": "https://github.com/usecatena/foundry",
+    "homepage": "https://docs.usefoundry.io",
+    "repository": "https://github.com/eykrehbein/foundry",
     "author": "Eyk Rehbein",
     "scripts": {
         "build": "tsup src/index.ts --format esm --dts",
