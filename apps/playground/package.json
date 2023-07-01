@@ -13,6 +13,8 @@
     "dependencies": {
         "@usefoundry/foundry": "*",
         "@usefoundry/tsconfig": "*",
+        "@usefoundry/tools-file-csv": "*",
+        "@usefoundry/tools-api-weather-api": "*",
         "body-parser": "^1.20.2",
         "dotenv": "^16.3.1",
         "express": "^4.18.2",
