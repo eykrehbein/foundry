@@ -9,7 +9,7 @@
     "scripts": {
         "build": "tsup src/index.ts --format cjs,esm --dts",
         "postbuild": "yarn generate-docs",
-        "generate-docs": "foundry generate-docs --type utils",
+        "generate-docs": "node ./node_modules/@usefoundry/utils/dist/cli.js generate-docs --type utils",
         "lint": "tsc",
         "test": "vitest"
     },

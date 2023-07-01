@@ -16,10 +16,15 @@
         "turbo": "^1.10.6"
     },
     "packageManager": "yarn@1.22.19",
-    "workspaces": [
-        "apps/*",
-        "packages/**/*"
-    ],
+    "workspaces": {
+        "nohoist": [
+            "**/@usefoundry/utils"
+        ],
+        "packages": [
+            "apps/*",
+            "packages/**/*"
+        ]
+    },
     "dependencies": {
         "@changesets/cli": "^2.26.1",
         "execa": "^7.1.1"

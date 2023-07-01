@@ -8,9 +8,9 @@
     "type": "module",
     "scripts": {
         "build": "tsup src/index.ts --format cjs,esm --dts",
-        "postbuild": "yarn generate-docs --type api",
+        "postbuild": "yarn generate-docs",
+        "generate-docs": "node ./node_modules/@usefoundry/utils/dist/cli.js generate-docs --type api",
         "release": "yarn build && changeset publish",
-        "generate-docs": "foundry generate-docs",
         "lint": "tsc",
         "test": "vitest"
     },

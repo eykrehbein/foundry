@@ -59,7 +59,6 @@ pnpm add  @usefoundry/tools-${type}-${dashCaseName}
         for (const func of functions) {
             docs += `### \`${func.name}\`\n\n`;
             docs += `${func.definition.description}\n\n`;
-            console.log(func.definition.schema);
 
             // json schema into markdown list, recursively
             const schemaToMarkdown = (schema: any, level = 0) => {
