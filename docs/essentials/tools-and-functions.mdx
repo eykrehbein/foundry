@@ -26,7 +26,9 @@ The **handler** is a function that is called when the function is executed. It r
 
 ## Using just parts of a tool
 
-By default, all functions of a tool are exposed to LLMs. However, you can also expose just a single function or a subset of functions.
+By default, all functions of a tool are exposed to LLMs. However, you can also expose just a single function or a subset of functions using the `pickFromTool` function provided by `@usefoundry/foundry`.
+
+````typescript
 
 ## Example implementation of a Tool
 
@@ -58,29 +60,4 @@ export class CalculatorTool {
 }
 
 export default CalculatorTool
-```
-
-```typescript packages/tools/utils/calculator/src/tool.ts
-import { makeFunction } from '@usefoundry/utils'
-import { z } from 'zod'
-import { evaluate } from 'mathjs'
-
-export class CalculatorTool {
-    constructor() {}
-
-    public calculate = makeFunction(
-        z
-            .object({
-                expression: z.string().describe('The mathematical expression to evaluate'),
-            })
-            .describe(
-                'Evaluates a mathematical expression and returns the result as string. Always use it do any math'
-            ),
-        async ({ expression }) => {
-            return evaluate(expression)
-        }
-    )
-}
-
-export default CalculatorTool
-```
+````

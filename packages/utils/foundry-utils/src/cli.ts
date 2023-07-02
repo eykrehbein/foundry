@@ -35,6 +35,10 @@ program
 
         let docs = ``
 
+        if (instance.description) {
+            docs += `${instance.description}\n\n`
+        }
+
         docs += `## Installation\n\n`
         docs += `<CodeGroup>
 

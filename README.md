@@ -47,7 +47,7 @@ npm install @usefoundry/tools-api-weather-api @usefoundry/tools-file-csv
 1. You define the tools you want to use using a new instance of `Foundry`
 
 ```typescript
-import { Foundry } from '@usefoundry/foundry'
+import { Foundry, pickFromTool } from '@usefoundry/foundry'
 import { Configuration, OpenAIApi } from 'openai'
 
 import WeatherApiTool from '@usefoundry/tools-api-weather-api'

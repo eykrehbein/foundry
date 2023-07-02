@@ -21,13 +21,12 @@ We value all contributions equally, regardless of their size or scope. Whether y
 
 ## Contribution Development Workflow
 
-1. Fork the Foundry repository on GitHub.
+1. Fork the Foundry repository on GitHub. Then clone your fork to your local machine.
 2. Install the project dependencies by running `pnpm install` in the root directory.
-3. Create a new branch for your contribution.
-4. Make your desired changes or additions.
-5. Test them by adding, updating or running existing unit tests. Run `pnpm test` to execute the tests
-6. Build using `pnpm build` and test your changes locally. The documentation for the tool is automatically generated post-build.
-7. Create a changeset
+3. Make your desired changes or additions.
+4. Test them by adding, updating or running existing unit tests. Run `pnpm test` to execute the tests
+5. Build using `pnpm build` and test your changes locally. The documentation for the tool is automatically generated post-build.
+6. Create a changeset
 
 A changeset is a file that describes the changes you have made to the project. It is used to generate a changelog and to determine the next version number for each package.
 
@@ -40,14 +39,16 @@ pnpm run changeset
 When prompted, select the impacted packages, select the type of change (patch, minor, major), and enter a summary of your changes.
 This will create a new changeset file in the `.changeset` directory.
 
-8. Commit and push your changes
-9. Submit a pull request to the `main` branch in the Foundry repository.
-10. Go through the review process together with Foundry maintainers.
-11. Once your contribution is accepted, it will be merged into the main codebase! 🎉
+7. Commit and push your changes
+8. Submit a pull request to the `main` branch in the Foundry repository.
+9. Go through the review process together with Foundry maintainers.
+10. Once your contribution is accepted, it will be merged into the main codebase! 🎉
 
 If you have any questions or need assistance with your contribution, please join our [Discord community](https://discord.gg/xsZfmakRhw) and ask in the `#contribution-help` channel.
 
-## Creating a new tool
+## Creating and Contributing a new Tool
+
+### 1. Use the tool generator to create a new tool
 
 We've set up a generator to help you create a new tool. To use it, the following from the root directory:
 
@@ -55,4 +56,106 @@ We've set up a generator to help you create a new tool. To use it, the following
 pnpm turbo gen tool
 ```
 
-You
+You'll be prompted to choose a name. Stick with _camelCase_ for the name - it should describe the general purpose of the tool.
+e.g. `pdf`, `imageProcessing`, `asana`, `airtable` etc.
+
+You'll also be prompted to choose one of the following tool types:
+
+-   `API` - tools that interact with external APIs
+-   `Utils` - tools that provide utility functions of some kind
+-   `File` - tools that interact with files
+
+The generator will create a new directory at `packages/tools/{type}/{name}` with all necessary files and configs.
+
+### 2. Implementing the tool
+
+Open `src/tool.ts` to see the class that represents the tool.
+
+If the tool needs to have a basic configuration, add parameters to the constructor and store them as private properties on the class to be able use them within all methods.
+
+<Accordion title="Example with constructor properties">
+
+<CodeGroup>
+
+```typescript tool.ts
+import type { AxiosInstance } from 'axios'
+
+import { makeFunction } from '@usefoundry/utils'
+import { z } from 'zod'
+import { createApi } from './api.js'
+
+export class WeatherApiTool {
+    public description = 'Tool to get weather data from weatherapi.com'
+
+    private apiKey: string = ''
+    private apiClient: AxiosInstance
+    constructor({ apiKey }: { apiKey: string }) {
+        this.apiKey = apiKey
+        this.apiClient = createApi({ apiKey })
+    }
+}
+```
+
+```typescript api.ts
+import axios from 'axios'
+
+export const createApi = ({ apiKey }: { apiKey: string }) =>
+    axios.create({
+        baseURL: 'http://api.weatherapi.com',
+    })
+```
+
+</CodeGroup>
+
+</Accordion>
+
+Now you're all set the add functions to the tool. Try to keep functions as pure as possible and avoid side effects.
+
+To add a function, always use the `makeFunction` helper function from `@usefoundry/utils`.
+
+<AccordionGroup>
+    <Accordion title="What does it do?">
+    -   It allows to use the `zod` schema that is passed as first argument to generate the JSON schema
+    -   It allows type-safety by inferring type `zod` schema type and passing it to the handler
+    -   It helps to automatically generate the documentation for the function based on the `zod` schema
+    </Accordion>
+
+<Accordion title="Syntax">
+```typescript
+makeFunction(
+    schema: z.ZodSchema<unknown>,
+    handler: (params: z.infer<typeof schema>) => Promise<unknown>
+)
+```
+</Accordion>
+</AccordionGroup>
+
+**Usage**
+
+```typescript
+import { makeFunction } from '@usefoundry/utils'
+import { z } from 'zod'
+import { evaluate } from 'mathjs'
+
+export class CalculatorTool {
+    constructor() {}
+
+    public calculate = makeFunction(
+        z
+            .object({
+                expression: z.string().describe('The mathematical expression to evaluate'),
+            })
+            .describe(
+                'Evaluates a mathematical expression and returns the result as string. Always use it do any math'
+            ),
+        async ({ expression }) => {
+            return evaluate(expression)
+        }
+    )
+}
+
+export default CalculatorTool
+```
+
+As seen in the example above, make sure to always **add a description** to the schema object, which serves as the description of the function.
+Also add a description to all properties of the schema object to further instruct the LLM on how to use the function and what properties to pass.
