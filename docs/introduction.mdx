@@ -23,12 +23,6 @@ Under the hood, it's a community-made collection of functions that are defined i
 -   **Framework-agnostic**: Foundry can be used in combination with any framework, e.g. LangChain, LlamaIndex or directly with OpenAI's SDK.
 -   **Standalone functions**: Functions can be used without the need for any LLMs or the `Foundry` class. Just install the respective tool call the function directly.
 
-## Usage
-
-The core use-case of Foundry is to enable LLM apps to use functions from various tools in order to perform complex tasks or API calls in real-time.
-
-However, you can also use all functions standalone, without LLMs or the `Foundry` class.
-
 <CardGroup cols={2}>
     <Card title="Quickstart" icon="play" href="./quickstart">
         Learn how to get started with Foundry in your codebase.
@@ -38,7 +32,9 @@ However, you can also use all functions standalone, without LLMs or the `Foundry
     </Card>
 </CardGroup>
 
-### Example using GPT-4 as LLM
+## Examples
+
+### Using GPT-4 as LLM
 
 In this example, we use OpenAI's GPT-4 model to evaluate a given prompt and run the appropriate function from the Foundry tools.
 
@@ -118,7 +114,7 @@ await runPrompt({
 await runPrompt({ userPrompt: 'Get a random number between 30 and 60' })
 ```
 
-### Standalone usage
+### Standalone
 
 You can also use the functions from Foundry standalone, without LLMs or the `Foundry` class.
 
