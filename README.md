@@ -13,7 +13,7 @@
 <p align="center">
   <a href="https://docs.usefoundry.io">Documentation</a> •
   <a href="https://docs.usefoundry.io/quickstart">Quickstart</a> • 
-  <a href="https://docs.usefoundry.io/quickstart">Tool Collection</a> • 
+  <a href="https://docs.usefoundry.io/tools">Tool Collection</a> • 
   <a href="https://docs.usefoundry.io/contributing">Contribute</a> •
   <a href="https://discord.gg/xsZfmakRhw">Discord</a>
 
