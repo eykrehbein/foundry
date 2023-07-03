@@ -58,7 +58,7 @@
     },
     "analytics": {
         "plausible": {
-            "domain": "plausible.io"
+            "domain": "docs.usefoundry.io"
         }
     }
 }
