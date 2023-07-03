@@ -1,4 +1,207 @@
 ---
 title: 'Create Custom Tools'
-description: 'Learn how to easily create custom Tools'
+description: 'Learn how to create standalone Tools'
 ---
+
+If you want to create private/custom tools without contributing them to Foundry's collection, this is the place to start.
+This is a good approach when you want to create a tool that is specific to your use case, to simply leverage the parsing utilities of Foundry.
+
+If it's a general purpose tool, consider contributing it to the Foundry Community by [following this guide instead](/contributing). 🫶🏼
+
+## Getting Started
+
+### Install dependencies
+
+To get started, we'll need to install the `@usefoundry/utils` package. This package contains all the types and utilities we'll need to create our Tool.
+
+<CodeGroup>
+
+```bash npm
+npm i @usefoundry/utils
+```
+
+```bash yarn
+yarn add @usefoundry/utils
+```
+
+```bash pnpm
+pnpm add @usefoundry/utils
+```
+
+</CodeGroup>
+
+### Create the Tool
+
+A Tool is nothing more than a class with public methods.
+
+```typescript
+class MyTool {
+    constructor() {
+        // Do any setup here
+    }
+}
+```
+
+In the following example we'll create a Tool for our imaginary productivity app that interacts with Tasks stored in our database.
+
+First, we need to define the props that our Tool will receive. In this case, we'll need the `userId` of the user that is using the Tool.
+
+```typescript
+interface TaskToolProps {
+    userId: number
+}
+```
+
+Next, we'll create our Tool class. We'll pass in the props we defined above, and store them on the class instance.
+
+```typescript
+class TaskTool {
+    private userId: string
+
+    constructor({ userId }: TaskToolProps) {
+        this.userId = userId
+    }
+}
+```
+
+Now we can start adding methods to our Tool. We'll start with a method to get the user's tasks.
+Note how we need to use the `makeFunction` utility to create our function. This way we can pass in a Zod schema to generate a JSON schema from it afterwards, while still having type safety.
+
+<Accordion title="Code">
+```typescript
+class TaskTool {
+    private userId: string
+
+    constructor({ userId }: TaskToolProps) {
+        this.userId = userId
+    }
+
+    public getUserTasks = makeFunction(z.any().describe("Get the user's tasks"), async () => {
+        // Fetch the user's tasks from our API
+        return await db.tasks.findMany({
+            where: {
+                userId: this.userId,
+            },
+        })
+    })
+
+}
+
+</Accordion>
+
+In the example above, we had no arguments to our function. Let's add a method that creates a new task. This method will take in a few arguments, and return the newly created task.
+
+<Accordion title="Code">
+```typescript
+class TaskTool {
+    private userId: string
+
+    constructor({ userId }: TaskToolProps) {
+        this.userId = userId
+    }
+
+    public getUserTasks = makeFunction(z.any().describe("Get the user's tasks"), async () => {
+        // Fetch the user's tasks from our API
+        return await db.tasks.findMany({
+            where: {
+                userId: this.userId,
+            },
+        })
+    })
+
+    public createTask = makeFunction(
+        z
+            .object({
+                title: z.string().min(1).max(255),
+                description: z.string().describe('The taskdescription'),
+                tags: z.array(z.string()),
+                project: z
+                    .string()
+                    .describe('The project this task belongs to. Validate this exists first'),
+            })
+            .describe('Create a new task'),
+        async ({ title, description, tags, project }) => {
+            // Create a new task in our database
+            return await db.tasks.create({
+                data: {
+                    title,
+                    description,
+                    tags,
+                    project,
+                    userId: this.userId,
+                },
+            })
+        }
+    )
+
+}
+
+````
+</Accordion>
+
+Finally, let's add a method to check if a project exists. This method will take in a single argument, and return a boolean.
+When using it in an automated chain of LLM calls, it should be called before `createTask` and be used as a predicate to determine if the next call should be executed.
+
+<Accordion title="Code">
+```typescript
+class TaskTool {
+    private userId: string
+
+    constructor({ userId }: TaskToolProps) {
+        this.userId = userId
+    }
+
+    public getUserTasks = makeFunction(z.any().describe("Get the user's tasks"), async () => {
+        // Fetch the user's tasks from our API
+        return await db.tasks.findMany({
+            where: {
+                userId: this.userId,
+            },
+        })
+    })
+
+    public createTask = makeFunction(
+        z
+            .object({
+                title: z.string().min(1).max(255),
+                description: z.string().describe('The taskdescription'),
+                tags: z.array(z.string()),
+                project: z
+                    .string()
+                    .describe('The project this task belongs to. Validate this exists first'),
+            })
+            .describe('Create a new task'),
+        async ({ title, description, tags, project }) => {
+            // Create a new task in our database
+            return await db.tasks.create({
+                data: {
+                    title,
+                    description,
+                    tags,
+                    project,
+                    userId: this.userId,
+                },
+            })
+        }
+    )
+
+    public checkProjectExists = makeFunction(
+        z
+            .object({
+                name: z.string(),
+            })
+            .describe('Check if a project exists'),
+        async (project) => {
+            // Check if a project exists in our database
+            return !!(await db.projects.findFirst({
+                where: {
+                    userId: this.userId,
+                    name: project,
+                },
+            }))
+        }
+    )
+}
+````
+
+</Accordion>

@@ -1,34 +1,35 @@
 ---
 title: Introduction to Foundry
-description: 'What is Foundry and how can it help you build LLM apps?'
+description: 'Learn what Foundry is and how to use it in your LLM apps.'
 ---
 
-## What is Foundry?
+Foundry is a framework-agnostic toolset to create and use Functions in LLM apps.
 
-Foundry is a framework-agnostic collection of tools that you can use to build dynamic LLM applications.
+When you create **Functions** with Foundry, they are organized in `class`es called **Tools**. For example, the `Calculator` Tool contains a `calculate` Function that can be used to perform calculations by passing in a math string.
 
-A tool contains a set of functions that can be used to perform a specific task within a certain domain. For example, the `Calculator` tool contains a `calculate` function that can be used to perform calculations by passing in a math string.
+Tools and Functions can easily be passed to LLMs like OpenAI's GPT-4 without writing custom JSON Schema definitions. The way they are defined allow for a generation of the JSON Schema on the fly by inferring the required arguments, names and descriptions.
 
-This tool can easily be passed to LLMs without writing custom JSON Schema. You can also just use certain functions from tools, not all.
+[_Btw, we'd love to welcome you as a contributor to Foundry!_](./contributing)
 
-Under the hood, it's a community-made collection of functions that are defined in a certain way so that they can easily be used by any LLM app.
+## When to use Foundry?
 
-[_We'd love to welcome you as a contributor to Foundry!_](./contributing)
+-   Whenever you want to integrate Functions into your LLM apps without the need to write custom JSON Schema definitions.
+-   You want to build LLM applications that have broad capabilities and can be used for a variety of tasks.
 
 ## Why use Foundry?
 
 -   **Community effort**: We want to build a great community of developers that are passionate about building LLM apps. Tools are written by developers, for developers.
--   **Easy to use**: Foundry is designed to be the easiest way to expose functions to LLMs.
--   **Customizable**: You can easily add custom tools and functions and use them in your LLM apps.
+-   **Easy to use**: Foundry is designed to be the easiest way to expose Functions to LLMs.
+-   **Customizable**: You can easily add custom Tools and Functions and use them in your LLM apps.
 -   **Framework-agnostic**: Foundry can be used in combination with any framework, e.g. LangChain, LlamaIndex or directly with OpenAI's SDK.
--   **Standalone functions**: Functions can be used without the need for any LLMs or the `Foundry` class. Just install the respective tool call the function directly.
+-   **Standalone functions**: Functions can be used without the need for any LLMs or the `Foundry` class. Just install the respective Tool and call the function directly.
 
 <CardGroup cols={2}>
     <Card title="Quickstart" icon="play" href="./quickstart">
         Learn how to get started with Foundry in your codebase.
     </Card>
     <Card title="Tools" icon="toolbox" href="/tools">
-        Browse the tools that are available in Foundry.
+        Browse the Tools that are available in Foundry.
     </Card>
 </CardGroup>
 
@@ -38,9 +39,9 @@ Under the hood, it's a community-made collection of functions that are defined i
 
 In this example, we use OpenAI's GPT-4 model to evaluate a given prompt and run the appropriate function from the Foundry tools.
 
-Note how the `getPreparedFunctions` dynamically generates the function definitions in the way OpenAI expects them.
+Note how the `getPreparedFunctions` dynamically generates the Function definitions in the way OpenAI expects them.
 
-After the LLM has predicted the function to run, we can use `runSelectedFunction` to run the function with the computed arguments to get the desired result.
+After the LLM has predicted the Function to run, we can use `runSelectedFunction` to run the Function with the computed arguments to get the desired result.
 
 ```typescript openai.ts
 import { Foundry } from '@usefoundry/foundry'

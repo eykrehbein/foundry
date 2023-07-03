@@ -9,23 +9,23 @@ icon: 'heart'
 We believe that the success of Foundry lies in the collaboration and contributions from a vibrant community of developers. Whether you are a seasoned developer or just starting out, we welcome your contributions to enhance the Foundry ecosystem. There are multiple ways you can contribute to Foundry:
 
 -   **Submit Custom Tools**:
-    Foundry is a framework-agnostic collection of tools, and you can contribute by creating and submitting your own custom tools. A tool is a set of functions designed to perform specific tasks within a certain domain. By creating and sharing your custom tools, you can help expand the functionality and usefulness of Foundry for everyone.
+    Foundry is a framework-agnostic collection of tools, and you can contribute by creating and submitting your own custom tools. A Tool is a set of functions designed to perform specific tasks within a certain domain. By creating and sharing your custom tools, you can help expand the functionality and usefulness of Foundry for everyone.
 
 -   **Find and Solve Bugs**:
     As with any software project, bugs are bound to occur. If you come across any bugs or issues while using Foundry, we encourage you to report them. By providing detailed bug reports and even proposing fixes or solutions, you can help improve the stability and reliability of Foundry for all users.
 
 -   **Contribute to the General Ecosystem**:
-    Beyond custom tools and bug fixes, you can contribute to the general ecosystem of Foundry. This can involve improving documentation, suggesting new features or enhancements, sharing best practices and tutorials, or engaging in discussions on community forums. Your contributions to the general ecosystem can greatly benefit the entire community and make Foundry a better tool for everyone.
+    Beyond custom tools and bug fixes, you can contribute to the general ecosystem of Foundry. This can involve improving documentation, suggesting new features or enhancements, sharing best practices and tutorials, or engaging in discussions on community forums. Your contributions to the general ecosystem can greatly benefit the entire community and make Foundry a better Tool for everyone.
 
-We value all contributions equally, regardless of their size or scope. Whether you submit a new custom tool, fix a critical bug, or provide valuable feedback, your contribution is highly appreciated. Together, we can build a thriving community of developers passionate about building LLM apps and leveraging the power of Foundry.
+We value all contributions equally, regardless of their size or scope. Whether you submit a new custom Tool, fix a critical bug, or provide valuable feedback, your contribution is highly appreciated. Together, we can build a thriving community of developers passionate about building LLM apps and leveraging the power of Foundry.
 
 ## Contribution Development Workflow
 
 1. Fork the Foundry repository on GitHub. Then clone your fork to your local machine.
 2. Install the project dependencies by running `pnpm install` in the root directory.
 3. Make your desired changes or additions.
-4. Test them by adding, updating or running existing unit tests. Run `pnpm test` to execute the tests
-5. Build using `pnpm build` and test your changes locally. The documentation for the tool is automatically generated post-build.
+4. Build the Tool using `pnpm build`. The documentation for the Tool is automatically generated post-build.
+5. Test them by adding, updating or running existing unit tests. Run `pnpm test` to execute the tests
 6. Create a changeset
 
 A changeset is a file that describes the changes you have made to the project. It is used to generate a changelog and to determine the next version number for each package.
@@ -48,18 +48,18 @@ If you have any questions or need assistance with your contribution, please join
 
 ## Creating and Contributing a new Tool
 
-### 1. Use the tool generator to create a new tool
+### 1. Use the Tool generator to create a new Tool
 
-We've set up a generator to help you create a new tool. To use it, the following from the root directory:
+We've set up a generator to help you create a new Tool. To use it, the following from the root directory:
 
 ```bash
 pnpm turbo gen tool
 ```
 
-You'll be prompted to choose a name. Stick with _camelCase_ for the name - it should describe the general purpose of the tool.
+You'll be prompted to choose a name. Stick with _camelCase_ for the name - it should describe the general purpose of the Tool.
 e.g. `pdf`, `imageProcessing`, `asana`, `airtable` etc.
 
-You'll also be prompted to choose one of the following tool types:
+You'll also be prompted to choose one of the following Tool types:
 
 -   `API` - tools that interact with external APIs
 -   `Utils` - tools that provide utility functions of some kind
@@ -67,11 +67,11 @@ You'll also be prompted to choose one of the following tool types:
 
 The generator will create a new directory at `packages/tools/{type}/{name}` with all necessary files and configs.
 
-### 2. Implementing the tool
+### 2. Implementing the Tool
 
-Open `src/tool.ts` to see the class that represents the tool.
+Open `src/tool.ts` to see the class that represents the Tool.
 
-If the tool needs to have a basic configuration, add parameters to the constructor and store them as private properties on the class to be able use them within all methods.
+If the Tool needs to have a basic configuration, add parameters to the constructor and store them as private properties on the class to be able use them within all methods.
 
 <Accordion title="Example with constructor properties">
 
@@ -109,7 +109,7 @@ export const createApi = ({ apiKey }: { apiKey: string }) =>
 
 </Accordion>
 
-Now you're all set the add functions to the tool. Try to keep functions as pure as possible and avoid side effects.
+Now you're all set the add functions to the Tool. Try to keep functions as pure as possible and avoid side effects.
 
 To add a function, always use the `makeFunction` helper function from `@usefoundry/utils`.
 
@@ -138,6 +138,8 @@ import { z } from 'zod'
 import { evaluate } from 'mathjs'
 
 export class CalculatorTool {
+    public description = 'Tool to evaluate mathematical expressions'
+
     constructor() {}
 
     public calculate = makeFunction(
@@ -158,4 +160,25 @@ export default CalculatorTool
 ```
 
 As seen in the example above, make sure to always **add a description** to the schema object, which serves as the description of the function.
+
 Also add a description to all properties of the schema object to further instruct the LLM on how to use the function and what properties to pass.
+
+### 3. Building the Tool
+
+To build the Tool, run `pnpm build` from the Tool's directory. Alternatively run it from the root directory to build all Tools and utils.
+
+After the build is complete, the documentation for the Tool will be automatically generated in the `docs` directory.
+To describe the Tool itself, add a public `description` property to the Tool class, as in the example above.
+
+### 4. Testing the Tool
+
+For `utils` and `file` Tools we ask you to please write unit tests for each Function. There currently isn't a setup for API Tools, but we're working on it.
+
+All tests should be placed in the `__tests__` directory of the Tool.
+
+### 5. Publishing the Tool
+
+To publish the Tool, stick to the development workflow described [above](#contribution-development-workflow), starting at step 6 (create a changeset).
+Once your PR is merged, the Tool will be automatically published to NPM.
+
+> Thanks for your contribution! 🎉 We're looking forward to seeing your Tool in action!
