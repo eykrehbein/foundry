@@ -23,9 +23,9 @@
 
 ## About
 
-The number of tools is limited, since we wanted to launch the Foundry "framework" as quickly as possible. We're now working on more tools to come, while firmly believing in the power of collective effort – therefore we warmly invite _you_ to contribute!
+As we wanted to get the Foundry framework up and running as quickly as possible, the range of tools is limited for the time being. But we're working on many more tools, and we believe in the power of collective effort - so we invite _you_ to contribute!
 
-If you are developing custom tools for the use with LLMs, please consider to contribute them into Foundry's library. As the number of tools in Foundry increases, its reach expands, leading to the creation of even more tools and so forth.
+If you develop custom tools for use with LLMs, please consider contributing them to the Foundry library. As the number of tools in Foundry grows, its reach expands, leading to the creation of even more tools, and so on.
 
 ## Documentation
 
