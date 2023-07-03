@@ -23,7 +23,9 @@
 
 ## About
 
-Foundry is working well, but it's still in an early state. Although the variety of tools is limited at the moment, we firmly believe in the power of collective effort – therefore we warmly invite _you_ to contribute! If you are developing custom tools for the use with LLMs, please consider to contribute them into Foundry's library. As the number of tools in Foundry increases, its reach expands, leading to the creation of even more tools and so forth.
+The number of tools is limited, since we wanted to launch the Foundry "framework" as quickly as possible. We're now working on more tools to come, while firmly believing in the power of collective effort – therefore we warmly invite _you_ to contribute!
+
+If you are developing custom tools for the use with LLMs, please consider to contribute them into Foundry's library. As the number of tools in Foundry increases, its reach expands, leading to the creation of even more tools and so forth.
 
 ## Documentation
 

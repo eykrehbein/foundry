@@ -32,42 +32,33 @@
     "navigation": [
         {
             "group": "Get Started",
-            "pages": [
-                "introduction",
-                "quickstart",
-                "contributing"
-            ]
+            "pages": ["introduction", "quickstart", "contributing"]
         },
         {
             "group": "Essentials",
-            "pages": [
-                "essentials/tools-and-functions",
-                "essentials/create-custom-tools"
-            ]
+            "pages": ["essentials/tools-and-functions", "essentials/create-custom-tools"]
         },
         {
             "group": "API Tools",
-            "pages": [
-                "tools/api/WeatherApi"
-            ]
+            "pages": ["tools/api/WeatherApi"]
         },
         {
             "group": "Utility Tools",
-            "pages": [
-                "tools/utils/Calculator",
-                "tools/utils/Random"
-            ]
+            "pages": ["tools/utils/Calculator", "tools/utils/Random"]
         },
         {
             "group": "File Tools",
-            "pages": [
-                "tools/file/Csv"
-            ]
+            "pages": ["tools/file/Csv"]
         }
     ],
     "footerSocials": {
         "github": "https://github.com/eykrehbein/foundry",
         "discord": "https://discord.gg/xsZfmakRhw",
         "twitter": "https://twitter.com/webeyk"
+    },
+    "analytics": {
+        "plausible": {
+            "domain": "docs.usefoundry.io"
+        }
     }
 }

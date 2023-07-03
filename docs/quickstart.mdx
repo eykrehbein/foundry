@@ -9,10 +9,11 @@ description: 'Get started with Foundry in 2 minutes.'
     ## Installation
 
     First, install the base package.
+
     It contains core functionalities like:
-    - Register [Tools and Functions](/essentials/tools-and-functions) that should be used
-    - Parse Tools and Functions into a format the LLM can understand
-    - Parse the LLM result, pick the function that should be executed and run it
+    - Registering [Tools and Functions](/essentials/tools-and-functions) that should be used
+    - Parsing Tools and Functions into a format the LLM can understand
+    - Parsing the LLM result, pick the function that should be executed and run it
 
     <CodeGroup>
 
@@ -30,9 +31,155 @@ description: 'Get started with Foundry in 2 minutes.'
 
     </CodeGroup>
 
+    ## Usage
+
+    ### 1. Register Tools and Functions
+
+    ```typescript
+    import { Foundry, pickFromTool } from '@usefoundry/foundry'
+
+    import CsvTool from '@usefoundry/tools-file-csv'
+    import CalculatorTool from '@usefoundry/tools-utils-calculator'
+
+    const foundry = new Foundry({
+      tools: [
+        new CalculatorTool(),
+        pickFromTool(new CsvTool(), ['writeCsvFileSync'])
+      ]
+    })
+
+    ```
+
+    ### 2. Get the function definitions for the LLM
+
+    Foundry has a built-in method to generate the expected JSON schema with the selected functions.
+
+    ```typescript
+    const functions = foundry.getPreparedFunctions({ target: 'openai' })
+    ```
+
+    <Accordion title="Resulting JSON Schema">
+    ```JSON
+    [
+      {
+        "name": "CalculatorTool__calculate",
+        "description": "Evaluates a mathematical expression and returns the result as string. Always use it do any math",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "expression": {
+              "type": "string",
+              "description": "The mathematical expression to evaluate"
+            }
+          },
+          "required": [
+            "expression"
+          ],
+          "additionalProperties": false,
+          "description": "Evaluates a mathematical expression and returns the result as string. Always use it do any math",
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      },
+      {
+        "name": "CsvTool__writeCsvFileSync",
+        "description": "Writes data to a csv file",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+              },
+              "description": "The rows to write, as an array of objects, each key representing a column"
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Defines the columns to write, in order"
+            }
+          },
+          "required": [
+            "path",
+            "data",
+            "columns"
+          ],
+          "additionalProperties": false,
+          "description": "Writes data to a csv file",
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    ]
+
+    ```
+
+    </Accordion>
+
+    ### 3. Run the LLM
+
+    ```typescript
+    const configuration = new Configuration({
+      apiKey: process.env.OPENAI_API_KEY!,
+    })
+
+    const openai = new OpenAIApi(configuration)
+
+    const prompt = "Write a list of fruits into ./fruits.csv"
+
+    const response = await openai.createChatCompletion({
+          // Just pass the generated function definitions to the LLm
+          functions: functions,
+          function_call: 'auto',
+          messages: [
+              {
+                  role: 'user',
+                  content: prompt,
+              },
+          ],
+          model: 'gpt-4-0613',
+          temperature: 0,
+      })
+    ```
+
+    ### 4. Parse the result
+
+    ```typescript
+    // Parse the result and get the function that should be executed
+    const targetFunctionProps = response.data.choices[0].message?.function_call
+
+    if (!targetFunctionProps) {
+        throw new Error('No function found in response')
+    }
+
+    // will execute CsvTool.writeCsvFileSync with the props given by the LLM
+    const functionResult = foundry.runSelectedFunction(targetFunctionProps)
+    ```
+
+
     </Tab>
     <Tab title="Standalone functions">
-        Hi
+      You can also use Foundry tools without using an LLM at all.
+
+      Choose the [Tools](/tools) you want to use and install them using the instruction in the Tools' documentations.
+
+      ## Usage
+
+      To use a Tool, instanciate it and call the function you want to use.
+
+      ```typescript
+      import CalculatorTool from '@usefoundry/tools-utils-calculator'
+
+      const tool = new CalculatorTool()
+
+      const result = tool.calculate("123 + 456")
+      ```
     </Tab>
 
 </Tabs>
