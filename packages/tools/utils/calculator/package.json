@@ -22,8 +22,8 @@
     },
     "dependencies": {
         "zod": "^3.21.4",
-        "@usefoundry/tsconfig": "*",
-        "@usefoundry/utils": "*",
+        "@usefoundry/tsconfig": "workspace:*",
+        "@usefoundry/utils": "workspace:*",
         "math-expression-evaluator": "^2.0.3",
         "mathjs": "^11.8.2"
     },

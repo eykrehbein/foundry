@@ -16,8 +16,8 @@
     "license": "MIT",
     "private": false,
     "dependencies": {
-        "@usefoundry/tsconfig": "*",
-        "@usefoundry/utils": "*"
+        "@usefoundry/tsconfig": "workspace:*",
+        "@usefoundry/utils": "workspace:*"
     },
     "devDependencies": {
         "tsup": "^7.0.0",
