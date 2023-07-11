@@ -23,8 +23,8 @@
     },
     "dependencies": {
         "zod": "^3.21.4",
-        "@usefoundry/tsconfig": "*",
-        "@usefoundry/utils": "*",
+        "@usefoundry/tsconfig": "workspace:*",
+        "@usefoundry/utils": "workspace:*",
         "csv": "^6.3.1",
         "csv-parse": "^5.4.0",
         "csv-stringify": "^6.4.0"

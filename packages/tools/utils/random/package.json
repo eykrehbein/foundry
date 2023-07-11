@@ -24,8 +24,8 @@
         "vitest": "^0.32.2"
     },
     "dependencies": {
-        "@usefoundry/tsconfig": "*",
-        "@usefoundry/utils": "*",
+        "@usefoundry/tsconfig": "workspace:*",
+        "@usefoundry/utils": "workspace:*",
         "zod": "^3.21.4"
     }
 }
